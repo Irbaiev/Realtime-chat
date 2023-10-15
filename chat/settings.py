@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #local app
     'core',
     'accounts',
+    'rooms',
 
     #other app
     'channels',
