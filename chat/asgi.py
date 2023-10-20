@@ -8,13 +8,13 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 
 import rooms.routing
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chat.settings')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chat.settings")
 
-application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
-    "websocket": AuthMiddlewareStack(
-        URLRouter(
-            rooms.routing.websocket_urlpatterns
-        )
-    )
-})
+application = ProtocolTypeRouter(
+    {
+        "http": get_asgi_application(),
+        "websocket": AuthMiddlewareStack(
+            URLRouter(rooms.routing.websocket_urlpatterns)
+        ),
+    }
+)
