@@ -1,14 +1,36 @@
 {
     "version": 2,
-    "builds": [{ "src": "chat" }],
-    "routes": [
+    "builds": [
       {
-        "src": "/(.*)",
-        "dest": "chat/asgi:application"
+        "src": "chat/asgi.py",
+        "use": "@vercel/python",
+        "config": {
+          "maxLambdaSize": "15mb",
+          "runtime": "python3.9",
+          "buildCommand": "pip install -r requirements.txt -t ."
+        }
+      },
+      {
+        "src": "build_files.sh",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "staticfiles"
+        }
       }
     ],
-    "env": {
-      "DJANGO_SETTINGS_MODULE": "chat.settings"
-    }
+    "routes": [
+      {
+        "src": "/static/(.*)",
+        "dest": "/static/$1"
+      },
+      {
+        "src": "/ws/(.*)",
+        "dest": "chat/asgi.py"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "chat/asgi.py"
+      }
+    ]
   }
   
